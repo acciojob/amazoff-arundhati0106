@@ -34,12 +34,12 @@ public class OrderRepository {
     }
 
     public void addOrderPartnerPair(String orderId, String partnerId) {
-
-        if(orderHashMap.containsKey(orderId) && deliveryPartnerHashMap.containsKey(partnerId)){
-
+        if(orderHashMap.containsKey(orderId) && deliveryPartnerHashMap.containsKey(partnerId)) {
             HashSet<String> currentOrders = new HashSet<String>();
+
             if(partnerOrderHashMap.containsKey(partnerId))
                 currentOrders = partnerOrderHashMap.get(partnerId);
+
             currentOrders.add(orderId);
             partnerOrderHashMap.put(partnerId, currentOrders);
 
@@ -58,13 +58,12 @@ public class OrderRepository {
     }
 
     public void deleteOrder(String orderId) {
-        if(orderPartnerHashMap.containsKey(orderId)){
+        if(orderPartnerHashMap.containsKey(orderId)) {
             String partnerId = orderPartnerHashMap.get(orderId);
             HashSet<String> orders = partnerOrderHashMap.get(partnerId);
             orders.remove(orderId);
             partnerOrderHashMap.put(partnerId, orders);
 
-            //change order count of partner
             DeliveryPartner partner = deliveryPartnerHashMap.get(partnerId);
             partner.setNumberOfOrders(orders.size());
         }
@@ -72,23 +71,21 @@ public class OrderRepository {
         if(orderHashMap.containsKey(orderId)){
             orderHashMap.remove(orderId);
         }
-
     }
 
     public void deletePartner(String partnerId) {
         HashSet<String> orders = new HashSet<>();
-        if(partnerOrderHashMap.containsKey(partnerId)){
+        if(partnerOrderHashMap.containsKey(partnerId)) {
             orders = partnerOrderHashMap.get(partnerId);
-            for(String order: orders){
-                if(orderPartnerHashMap.containsKey(order)){
-
+            for(String order: orders) {
+                if(orderPartnerHashMap.containsKey(order)) {
                     orderPartnerHashMap.remove(order);
                 }
             }
             partnerOrderHashMap.remove(partnerId);
         }
 
-        if(deliveryPartnerHashMap.containsKey(partnerId)){
+        if(deliveryPartnerHashMap.containsKey(partnerId)) {
             deliveryPartnerHashMap.remove(partnerId);
         }
     }
@@ -98,8 +95,8 @@ public class OrderRepository {
 
         if(partnerOrderHashMap.containsKey(partnerId)){
             HashSet<String> orders = partnerOrderHashMap.get(partnerId);
-            for(String order: orders){
-                if(orderHashMap.containsKey(order)){
+            for(String order: orders) {
+                if(orderHashMap.containsKey(order)) {
                     Order currOrder = orderHashMap.get(order);
                     time = Math.max(time, currOrder.getDeliveryTime());
                 }
@@ -111,10 +108,10 @@ public class OrderRepository {
 
         String hourInString = String.valueOf(hour);
         String minInString = String.valueOf(minutes);
-        if(hourInString.length() == 1){
+        if(hourInString.length() == 1) {
             hourInString = "0" + hourInString;
         }
-        if(minInString.length() == 1){
+        if(minInString.length() == 1) {
             minInString = "0" + minInString;
         }
 
@@ -127,12 +124,12 @@ public class OrderRepository {
         Integer time = hour*60 + minutes;
 
         Integer countOfOrders = 0;
-        if(partnerOrderHashMap.containsKey(partnerId)){
+        if(partnerOrderHashMap.containsKey(partnerId)) {
             HashSet<String> orders = partnerOrderHashMap.get(partnerId);
-            for(String order: orders){
-                if(orderHashMap.containsKey(order)){
+            for(String order: orders) {
+                if(orderHashMap.containsKey(order)) {
                     Order currOrder = orderHashMap.get(order);
-                    if(time < currOrder.getDeliveryTime()){
+                    if(time < currOrder.getDeliveryTime()) {
                         countOfOrders += 1;
                     }
                 }
@@ -145,7 +142,7 @@ public class OrderRepository {
         Integer countOfOrders = 0;
         List<String> orders =  new ArrayList<>(orderHashMap.keySet());
         for(String orderId: orders){
-            if(!orderPartnerHashMap.containsKey(orderId)){
+            if(!orderPartnerHashMap.containsKey(orderId)) {
                 countOfOrders += 1;
             }
         }
@@ -154,7 +151,8 @@ public class OrderRepository {
 
     public List<String> getOrdersByPartnerId(String partnerId) {
         HashSet<String> orderList = new HashSet<>();
-        if(partnerOrderHashMap.containsKey(partnerId)) orderList = partnerOrderHashMap.get(partnerId);
+        if(partnerOrderHashMap.containsKey(partnerId))
+            orderList = partnerOrderHashMap.get(partnerId);
         return new ArrayList<>(orderList);
     }
 

@@ -12,11 +12,11 @@ public class Order {
 
         // deliveryTime given in HH:MM format,
         // so first two characters of string -> hours
-        // next characters, starting from 2nd index -> minutes
+        // next characters -> minutes
         // deliveryTime  = HH*60 + MM
         this.id = id;
         Integer hour = Integer.valueOf(deliveryTime.substring(0,2));
-        Integer minutes = Integer.valueOf(deliveryTime.substring(2));
+        Integer minutes = Integer.valueOf(deliveryTime.substring(3));
         this.deliveryTime = hour*60 + minutes;
     }
 
