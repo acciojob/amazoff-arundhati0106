@@ -15,10 +15,14 @@ public class Order {
         // next characters -> minutes
         // deliveryTime  = HH*60 + MM
         this.id = id;
-        Integer hour = Integer.valueOf(deliveryTime.substring(0,2));
-        Integer minutes = Integer.valueOf(deliveryTime.substring(3));
-        this.deliveryTime = hour*60 + minutes;
+        int time = Integer.parseInt(deliveryTime.substring(0, 2)) * 60 +
+                   Integer.parseInt(deliveryTime.substring(3));
+        this.deliveryTime = time;
     }
+
+    // Integer hour = Integer.valueOf(deliveryTime.substring(0,2));
+    // Integer minutes = Integer.valueOf(deliveryTime.substring(3));
+
 
     public Order() {
 
@@ -28,5 +32,7 @@ public class Order {
         return id;
     }
 
-    public int getDeliveryTime() {return deliveryTime;}
+    public int getDeliveryTime() {
+        return deliveryTime;
+    }
 }
